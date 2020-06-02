@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>edit</title>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="navbar">
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="list.html">Jagsaalt</a></li>
+      </ul>
+      <form action="app.js" class="content">
+        <h2>title1</h2>
+        <br />
+        <input type="text" id="title" placeholder="title1" /><br />
+        <label>Агуулга</label>
+        <br />
+        <textarea
+          name="content"
+          id="content"
+          cols="30"
+          rows="10"
+          placeholder="aguulga"
+        ></textarea>
+        <br />
+        <input type="date" name="" id="" />
+        <br />
+        <input type="text" placeholder="hereglegch" />
+        <br /><br />
+
+        <button class="createBtn">hadgalah</button>
+        <!-- onclick="callMe()" -->
+      </form>
+    </div>
+
+    <script src="script.js">
+
+      //   function callMe() {
+      //       var title = document.getElementById("content").value;
+      //       fetch('http://localhost:8080/update', {
+      //           method: 'post',
+      //           body: JSON.stringify({title: title})
+      //       })
+      //   }
+    </script>
+  </body>
+</html>
