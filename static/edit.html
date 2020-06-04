@@ -3,49 +3,96 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
     <link rel="stylesheet" href="style.css" />
-    <title>edit</title>
+    <title>create</title>
   </head>
   <body>
     <div class="container">
       <ul class="navbar">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="/static/index.html">Home</a></li>
 
-        <li><a href="list.html">Jagsaalt</a></li>
+        <li><a href="/static/list.html">Jagsaalt</a></li>
       </ul>
-      <form action="app.js" class="content">
-        <h2>title1</h2>
-        <br />
-        <input type="text" id="title" placeholder="title1" /><br />
-        <label>Агуулга</label>
-        <br />
-        <textarea
-          name="content"
-          id="content"
-          cols="30"
-          rows="10"
-          placeholder="aguulga"
-        ></textarea>
-        <br />
-        <input type="date" name="" id="" />
-        <br />
-        <input type="text" placeholder="hereglegch" />
-        <br /><br />
+      <div id="containerDiv">
+        <div id="contentDiv">
+          <h2 id="head1">${data1[0].title}</h2>
+          <br />
+          <p id="content1">
+            ${data1[0].content}
+          </p>
+          <br />
+          <p id="user1">${data1[0].user_id}</p>
+          <p id="date1">${data1[0].created_dt}</p>
+        </div>
 
-        <button class="createBtn">hadgalah</button>
-        <!-- onclick="callMe()" -->
-      </form>
+        <button onclick="myFunc()">edit</button>
+      </div>
     </div>
+    <script>
+      function myFunc() {
+        var head1 = document.getElementById("head1");
+        var content1 = document.getElementById("content1");
+        var user1 = document.getElementById("user1");
+        var date1 = document.getElementById("date1");
+        if (head1 != null) {
+          head1.remove();
+          content1.remove();
+          user1.remove();
+          date1.remove();
+          let head2 = `<input type="text" id="title" name="title" /><br />`;
+          let contDiv = document.getElementById("contentDiv");
 
-    <script src="script.js">
+          contDiv.insertAdjacentHTML("afterbegin", head2);
 
-      //   function callMe() {
-      //       var title = document.getElementById("content").value;
-      //       fetch('http://localhost:8080/update', {
-      //           method: 'post',
-      //           body: JSON.stringify({title: title})
-      //       })
-      //   }
+          head2.value = "${data1[0].title}";
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", brs);
+          let content2 = document.createElement("textarea");
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", content2);
+
+          content2.value = "${data1[0].content}";
+
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", brs);
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", brs);
+          let user2 = document.createElement("input");
+          user2.type = "number";
+          user2.value = "${data1[0].user_id} ";
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", user2);
+
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", brs);
+          let date2 = document.createElement("input");
+          document
+            .getElementById("contentDiv")
+            .insertAdjacentElement("beforeend", date2);
+          date2.type = "date";
+          date2.value = "${data1[0].created_dt}";
+        }
+
+        if (!document.getElementById("saveBtn")) {
+          let saveBtn = document.createElement("button");
+          saveBtn.innerHTML = "save";
+          saveBtn.id = "saveBtn";
+          saveBtn.addEventListener("click", saveFunc);
+
+          document.getElementById("containerDiv").appendChild(saveBtn);
+        }
+      }
+      function saveFunc() {
+        alert("saveFunc dotroos");
+      }
     </script>
+    <script src="/static/script.js"></script>
   </body>
 </html>

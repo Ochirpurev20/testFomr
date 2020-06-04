@@ -4,11 +4,16 @@
   "description": "test express",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon app.js",
+    "test": "nodemon test.js",
     "server": "nodemon server/index.js --exec babel-node"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

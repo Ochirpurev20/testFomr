@@ -34,7 +34,7 @@ button {
   display: block;
   text-decoration: none;
   padding: 10px;
-  color: white;
+  color: black;
 }
 .navbar li a:hover {
   background-color: #008080;

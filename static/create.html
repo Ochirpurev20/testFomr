@@ -13,67 +13,42 @@
         <li><a href="#">Uusgeh</a></li>
         <li><a href="list.html">Jagsaalt</a></li>
       </ul>
-      <form action="/create" method="get" class="content">
+      <form class="content">
+        <!-- action="/create" method="get"  -->
         <label>Гарчиг</label>
         <br />
-        <input type="text" id="title" /><br />
+        <input type="text" id="title" name="title" /><br />
 
         <label>Агуулга</label>
         <br />
         <textarea name="content" id="content" cols="30" rows="10"></textarea>
         <br />
-        <input type="date" name="" id="" />
+        <input type="date" name="date" id="date" />
         <br />
-        <input type="text" placeholder="hereglegch" />
+        <input type="number" name="user" id="user" placeholder="hereglegch" />
         <br /><br />
 
-        <button class="createBtn">create</button>
-        <!-- onclick="callMe()" -->
+        <button type="button" onclick="callMe()">create</button>
+        <!-- -->
       </form>
     </div>
     <script>
-      // function callMe() {
-      //   var title = document.getElementById("content").value;
-      //   fetch("http://localhost:8080/update", {
-      //     method: "post",
-      //     body: JSON.stringify({ title: title }),
-      //   });
-      // }
-      //----------------
-      // fetch("/create", (method: "post"))
-      //   .then((res) => res.json())
-      //   .then((result) => {
-      //     console.log("res data: " + JSON.stringify(result));
-      //     let tempData = results;
-      //     console.log(
-      //       `tempData iin urt ni ${
-      //         tempData.length
-      //       } turul ni ${typeof tempData} ugta ni ${tempData}`
-      //     );
-
-      //     let listTable = document.getElementById("listTable");
-      //     for (i = 0; i < tempData.length; i++) {
-      //       let row = listTable.insertRow(i);
-      //       let element = null;
-      //       let cell1 = row.insertCell(0);
-      //       let cell2 = row.insertCell(1);
-      //       let cell3 = row.insertCell(2);
-      //       let cell4 = row.insertCell(3);
-      //       let cell5 = row.insertCell(4);
-      //       let cell6 = row.insertCell(5);
-      //       let cell7 = row.insertCell(6);
-      //       cell1.innerHTML = tempData[i].title;
-      //       cell2.innerHTML = tempData[i].content;
-      //       cell3.innerHTML = tempData[i].created_dt;
-      //       cell4.innerHTML = tempData[i].user_id;
-      //       cell5.innerHTML = '<a href="deteil.html">delgerengui</a>';
-      //       cell6.innerHTML = '<a href="edit.html">zasah</a>';
-      //       cell7.innerHTML = '<button class="deleteBtn">ustgah</button>';
-
-      //       console.log("rowdata: ", tempData[i]);
-      //       console.log(typeof tempData[i]);
-      //     }
-      //   });
+      function callMe() {
+        var title = document.getElementById("title").value;
+        var content = document.getElementById("content").value;
+        var date = document.getElementById("date").value;
+        var user = document.getElementById("user").value;
+        console.log(title, content, user);
+        fetch("/create", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "post",
+          body: JSON.stringify({ title, content, date, user }),
+        });
+        location.reload();
+        alert("call me function dotroos: amjilttai uuslee");
+      }
     </script>
     <script src="script.js"></script>
   </body>
