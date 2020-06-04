@@ -54,7 +54,7 @@
           cell1.innerHTML = tempData[i].title;
           cell2.innerHTML = tempData[i].content.substring(0,15);
           cell3.innerHTML = tempData[i].created_dt.substring(0,10);
-          cell4.innerHTML = tempData[i].user_id;
+          cell4.innerHTML = tempData[i].create_user_id;
           cell5.innerHTML = `<a href="/test_detail?id=${id[i]}">delgerengui</a>` ;
           // cell6.innerHTML = `<a href="edit.html?id=${id[i]}">zasah</a>` ;
           cell6.innerHTML = `<button class="deleteBtn" onclick="deleteRow(${id[i]})">ustgah</button>`;

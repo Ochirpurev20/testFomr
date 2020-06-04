@@ -15,19 +15,21 @@ app.post("/create", async (req, res) => {
     password: "1111",
     database: "blog",
   });
-  con.connect((err) => {
-    if (err) throw err;
-    console.log("connected via create");
-    let createReq = req.body;
-    let date = new Date(createReq.date);
-    let table = "post";
-    var sql = `INSERT INTO ${table} (title,content, created_dt, user_id) VALUES ('${createReq.title}', '${createReq.content}', '${createReq.date}','${createReq.user}')`;
-    con.query(sql, (err, result) => {
+  con
+    .connect((err) => {
       if (err) throw err;
-      res.send(result);
-    });
-    console.log(createReq);
-  });
+      console.log("connected via create");
+      let createReq = req.body;
+      let date = new Date(createReq.date);
+      let table = "post";
+      var sql = `INSERT INTO ${table} (title,content, created_dt, create_user_id) VALUES ('${createReq.title}', '${createReq.content}', '${createReq.date}','${createReq.user}')`;
+      con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      });
+      console.log(createReq);
+    })
+    .then(con.end());
   //con.end();
 });
 
