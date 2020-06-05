@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>create</title>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Uusgeh</a></li>
+        <li><a href="list.html">Jagsaalt</a></li>
+      </ul>
+      <form class="content">
+        <!-- action="/create" method="get"  -->
+        <label>Гарчиг</label>
+        <br />
+        <input type="text" id="title" name="title" /><br />
+
+        <label>Агуулга</label>
+        <br />
+        <textarea name="content" id="content" cols="55" rows="10"></textarea>
+        <br />
+        <!-- <input type="date" name="date" id="date" /> -->
+        <label> Үүссэн огноо</label>
+        <br />
+        <label id="date"></label>
+        <br />
+        <select name="user" id="user"> </select>
+        <br /><br />
+
+        <button type="button" onclick="callMe()">create</button>
+        <!-- -->
+      </form>
+    </div>
+    <script>
+      var currentdate = new Date();
+      var datetime =
+        currentdate.getFullYear() +
+        "-" +
+        (currentdate.getMonth() + 1) +
+        "-" +
+        currentdate.getDate() +
+        "  " +
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
+      console.log(datetime);
+      document.getElementById("date").textContent = datetime;
+      fetch("/read/user")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("res data: " + JSON.stringify(data));
+          let tempData = data.results;
+          console.log(
+            `tempData iin urt ni ${
+              tempData.length
+            } turul ni ${typeof tempData} ugta ni ${tempData}`
+          );
+          let id = [];
+          let selection = document.getElementById("user");
+          for (i = 0; i < tempData.length; i++) {
+            id[i] = tempData[i].id;
+            let option = `<option value="${tempData[i].id}"> ${tempData[i].name}</option>`;
+            selection.insertAdjacentHTML("beforeend", option);
+
+            console.log("rowdata: ", tempData[i]);
+            console.log(typeof tempData[i]);
+          }
+        });
+      function callMe() {
+        var title = document.getElementById("title").value;
+        var content = document.getElementById("content").value;
+        var date = datetime;
+        var user = document.getElementById("user").value;
+        console.log(title, content, user);
+        fetch("/create", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "post",
+          body: JSON.stringify({ title, content, date, user }),
+        });
+        location.reload();
+        alert("amjilttai ilgeelee");
+      }
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
