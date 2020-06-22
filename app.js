@@ -5,9 +5,9 @@ const path = require("path");
 
 const app = express();
 app.use(bodyParser.json());
-app.use("/front", express.static(path.join(__dirname, "./front")));
+app.use("front", express.static(path.join(__dirname, "./front")));
 
-app.post("/create", async (req, res) => {
+app.post("/api/create", async (req, res) => {
   //console.log(req.body);
   const con = mysql.createConnection({
     host: "localhost",
@@ -19,13 +19,16 @@ app.post("/create", async (req, res) => {
     if (err) throw err;
     console.log("connected via create");
     let createReq = req.body;
-    let date = new Date(createReq.date);
+    console.log("createReq title: " + createReq.title);
     let table = "post";
-    var sql = `INSERT INTO ${table} (title,content, created_dt, create_user_id) VALUES ('${createReq.title}', '${createReq.content}', '${createReq.date}','${createReq.user}')`;
+    let sql = `INSERT INTO ${table} (title,content, created_dt, create_user_id) VALUES ('${createReq.title}', '${createReq.content}', '${createReq.date}','${createReq.user}')`;
     con.query(sql, (err, result) => {
-      if (err) throw err;
-      res.send(result);
-      console.log({ status: "OK" });
+      if (err) {
+        console.log(err);
+        res.send({ messege: "amjilttai frm server", err });
+      }
+      res.send({ status: "Amjilttai /frm server/", result });
+      console.log({});
     });
     console.log(createReq);
   });
@@ -33,7 +36,7 @@ app.post("/create", async (req, res) => {
   //con.end();
 });
 
-app.get("/read", async (req, res) => {
+app.get("/api/read", async (req, res) => {
   const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -54,13 +57,45 @@ app.get("/read", async (req, res) => {
 
   connection.end();
 });
-app.get("/read/user", async (req, res) => {
+
+app.get("/api/read/:id", async (req, res) => {
+  const { id = "" } = req.params || {};
+  if (!id) {
+    return res.send({ post: null, error: { message: "invalid parameter" } });
+  }
+  const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "1111",
+    database: "blog",
+  });
+  let table = "post";
+  con.connect((err) => {
+    if (err) throw err;
+    console.log("connected read id");
+    const readReq = req.body;
+    let counter, post;
+    //`select id from ${table} limit ${readReq.limit}`;
+    let sqlPost = `SELECT * FROM ${table}  where id = ${id} `;
+    con.query(sqlPost, (err, result) => {
+      if (err) {
+        return res.send({ error: { message: err.message } });
+      }
+      // res.send(result);
+      post = result[0] || null;
+      console.log(post);
+      return res.send({ post });
+    });
+  });
+});
+app.get("/api/user", async (req, res) => {
   const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "1111",
     database: "blog",
   });
+  console.log(`req is ${req}`);
   let table = "user";
   connection.connect();
 
@@ -75,7 +110,11 @@ app.get("/read/user", async (req, res) => {
 
   connection.end();
 });
-app.post("/read/id", async (req, res) => {
+
+/**
+ * post iin delgerenguig butsaana
+ */
+app.post("/api/read/id", async (req, res) => {
   console.log(`id ni: ${req.body.id}`);
   let id = req.body.id;
   const connection = mysql.createConnection({
@@ -99,7 +138,7 @@ app.post("/read/id", async (req, res) => {
   });
 });
 
-app.delete("/delete", async (req, res) => {
+app.delete("/api/delete", async (req, res) => {
   const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -110,6 +149,7 @@ app.delete("/delete", async (req, res) => {
     if (err) throw err;
     console.log("connected through delete");
     let deleteReq = req.body;
+    console.log(`deleteReq.id===${deleteReq.id} `);
     let table = "post";
     var sql = `DELETE FROM ${table}  WHERE id = '${deleteReq.id}'`;
     con.query(sql, (err, result) => {
@@ -121,7 +161,7 @@ app.delete("/delete", async (req, res) => {
   });
 });
 
-app.put("/update", async (req, res) => {
+app.put("/api/update", async (req, res) => {
   const con = mysql.createConnection({
     host: "localhost",
     user: "root",

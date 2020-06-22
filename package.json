@@ -1,7 +1,7 @@
 {
-  "name": "express",
+  "name": "post_backend",
   "version": "1.0.0",
-  "description": "test express",
+  "description": "backend",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
